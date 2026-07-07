@@ -14,33 +14,28 @@ It spans currently two servers, tied together with Ubiquiti networking and cloud
 This is a **work in progress**
 
 ## Navigation 
-* [Apps](https://github.com/FaerberTorben/homelab/tree/main/apps) - List of all the apps and services
+* [Apps](apps/) - List of all the apps and services.
 
 ## Hardware
 
 ### Compute
 
-| | FUJITSU PRIMERGY RX1330 M2 | Proxmox Node 1 (pve1) |
+| | FUJITSU PRIMERGY RX1330 M2 | Custom Intel N100 |
 |---|---|---|
-| **OS** | Proxmox |
-| **Role** | Services | HomeAssistant, AdGuard, Vaultwarden, n8n, Cloudflared and other services |
-| **CPU** | 8 x Intel(R) Xeon(R) E3-1230 v5 @ 3,40Ghz |
-| **RAM** | 40GB DDR3 |
-| **Storage** | [2x Intenso High 1TB SDD](https://amzn.to/) (BTRFS mirrored boot) |
+| **OS** | Proxmox (pve1) | Proxmox (pve2) |
+| **Role** | HomeAssistant, AdGuard, Vaultwarden, n8n, Cloudflared and other services | TrueNAS, Immich, Paperless-ngx and other services |
+| **CPU** | 8 x Intel(R) Xeon(R) E3-1230 v5 @ 3.40Ghz | 4 x Intel(R) N100 |
+| **RAM** | 40GB DDR3 | 32GB DDR4 |
+| **BOOT Storage** | [2x Intenso High 1TB SDD](https://amzn.to/) (BTRFS mirrored boot) | [2x Intenso Performance 256GB SDD](https://amzn.to/) (BTRFS mirrored boot) |
+| **Storage** | | [3x Toshiba xxx 10TB HDD](https://amzn.to/)
 
-| | Custom Intel N100 | Proxmox Node 2 (pve2) |
-|---|---|---|
-| **OS** | Proxmox |
-| **Role** | Storage | TrueNAS, Immich, Paperless-ngx and other services |
-| **CPU** | 4 x Intel(R) N100 |
-| **RAM** | 32GB DDR4 |
-| **Storage** | [2x Intenso Performance 256GB SDD](https://amzn.to/) (BTRFS mirrored boot) | [3x Toshiba xxx 10TB HDD](https://amzn.to/)
-
-* !!- Not Available right now -!!
-| | FUJITSU PRIMERGY RX1330 | Proxmox Node 3 (pve3) | 
-|---|---|---|
+#!!- Not Available right now -!!
+| | FUJITSU PRIMERGY RX1330 |
+|---|---|
 | **OS** | Proxmox |
 | **Role** | Services |	
+| **CPU** | 6 x Intel(R) Xeon(R) E3-2136 xx @ 3.30Ghz |
+| **RAM** | 64GB DDR4 |
 
 ### Networking
 

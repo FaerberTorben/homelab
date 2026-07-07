@@ -3,7 +3,7 @@
 This page in the homelab repository is a way to feature all of the apps that I have running!
 
 ## Navigation 
-* [Home](https://github.com/FaerberTorben/homelab/tree/main) - List of all the apps and services  
+* [__Apps__](https://github.com/FaerberTorben/homelab/tree/main/apps) - List of all the apps and services.
 
 ### Vaultwarden
 ![](https://github.com/FaerberTorben/homelab/blob/main/apps/images/03_vaultwarden-password-manager.png)
