@@ -1,13 +1,13 @@
 # My Homelab Setup
 
 This repository contains 
-	* Docker Compose stacks
-	* configuration templates
-	* documentation for everything running in my homelab
+* Docker Compose stacks
+* configuration templates
+* documentation for everything running in my homelab
 	
 It spans currently two servers, tied together with Ubiquiti networking and cloudflare service.
-	* First Proxmox node for Services 
-	* Second Node for NAS and Data Container
+* First Proxmox node for Services 
+* Second Node for NAS and Data Container
 	
 ## Table of Contents
 
@@ -29,13 +29,13 @@ This is a **work in progress**
 | **BOOT Storage** | [2x Intenso High 1TB SDD](https://amzn.to/) (BTRFS mirrored boot) | [2x Intenso Performance 256GB SDD](https://amzn.to/) (BTRFS mirrored boot) |
 | **Storage** | | [3x Toshiba xxx 10TB HDD](https://amzn.to/)
 
-#!!- Not Available right now -!!
+!!- Not Available right now -!!
 | | FUJITSU PRIMERGY RX1330 |
 |---|---|
 | **OS** | Proxmox |
 | **Role** | Services |	
-| **CPU** | 6 x Intel(R) Xeon(R) E3-2136 xx @ 3.30Ghz |
-| **RAM** | 64GB DDR4 |
+| **CPU** | 12 x Intel(R) Xeon(R) E3-2136 @ 3.30Ghz |
+| **RAM** | 64GB DDR4 ECC |
 
 ### Networking
 
