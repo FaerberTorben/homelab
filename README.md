@@ -26,7 +26,7 @@ This is a **work in progress**
 | **Role** | HomeAssistant, AdGuard, Vaultwarden, n8n, Cloudflared and other services | TrueNAS, Immich, Paperless-ngx and other services |
 | **CPU** | 8 x Intel(R) Xeon(R) E3-1230 v5 @ 3.40Ghz | 4 x Intel(R) N100 |
 | **RAM** | 40GB DDR3 | 32GB DDR4 |
-| **BOOT Storage** | [2x Intenso High 1TB SDD](https://amzn.to/) (BTRFS mirrored boot) | [2x Intenso Performance 256GB SDD](https://amzn.to/) (BTRFS mirrored boot) |
+| **BOOT Storage** | [2x Intenso High 960GB SDD](https://amzn.eu/d/0iS5TDub) RAID1 BTRFS (mirrored boot) | [2x Intenso Performance 250GB SDD](https://amzn.eu/d/024gGDCY) RAID1 BTRFS (mirrored boot) |
 | **Storage** | | [3x Toshiba xxx 10TB HDD](https://amzn.to/)
 
 !!- Not Available right now -!!
@@ -36,6 +36,7 @@ This is a **work in progress**
 | **Role** | Services |	
 | **CPU** | 12 x Intel(R) Xeon(R) E3-2136 @ 3.30Ghz |
 | **RAM** | 64GB DDR4 ECC |
+| **BOOT Storage** | [2x Intenso High 960GB SDD](https://amzn.eu/d/0iS5TDub) RAID1 BTRFS (mirrored boot) | 
 
 ### Networking
 
