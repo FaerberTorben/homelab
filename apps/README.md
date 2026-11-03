@@ -1,69 +1,37 @@
-# Service catalog
+# Apps
 
-> **Last verified:** November 3, 2026. Entries reflect the live Proxmox inventory at that time. Runtime state is not a health check; monitoring and application-level checks remain the source of truth.
+This is the short version. I do not try to document every container, test VM, or supporting component here. The point is to show the things I actually use.
 
-## Core infrastructure
+## Home automation
 
-| Service | Purpose | Location |
-|---|---|---|
-| TrueNAS SCALE | Shared NAS and SMB/NFS-backed storage | `pve2` / VM 104 |
-| Cloudflare DDNS | Dynamic DNS updates | `pve` / CT 110 |
-| Cloudflared | Tunnel and edge connectivity workloads | `pve` / CT 133 and tagged dependent guests |
-| UPS service | Power monitoring/integration | `pve` / CT 950 |
-| Homepage | Internal service dashboard | `pve3` / CT 113 |
+- Home Assistant is the centre of the smart-home setup.
+- Node-RED handles automations that are easier to manage as flows.
+- MQTT, Zigbee2MQTT, and ESPHome connect sensors, switches, and other devices.
+- n8n is for the automation jobs that do not belong in Home Assistant.
 
-## Security and identity
+## Privacy and access
 
-| Service | Purpose | Location |
-|---|---|---|
-| Vaultwarden | Password manager | `pve` / CT 100 and `pve3` / CT 136 |
-| Vaultwarden PostgreSQL | Vaultwarden database | `pve2` / CT 135 |
-| Vaultwarden Nginx | Vaultwarden proxy layer | `pve2` / CT 137 |
-| Authentik | Identity and access management | `pve` / CT 129 |
-| ntfy | Self-hosted notifications | `pve` / CT 117 |
+- Vaultwarden keeps my passwords under my own control.
+- Authentik handles login and access for services that need it.
+- ntfy sends notifications to my devices.
 
-## Smart home and automation
+## Media and documents
 
-| Service | Purpose | Location |
-|---|---|---|
-| Home Assistant OS | Home automation platform | `pve` / VM 132 |
-| Node-RED | General automation flows | `pve3` / CT 130 |
-| Node-RED House | House-specific automation flows | `pve3` / CT 140 |
-| MQTT | Primary MQTT broker | `pve` / CT 107 |
-| MQTT House | Segmented house MQTT broker | `pve` / CT 125 |
-| Zigbee2MQTT House | Zigbee-to-MQTT bridge | `pve` / CT 127 |
-| ESPHome | Device firmware and management | `pve` / CT 131 |
-| n8n | Workflow automation | `pve3` / CT 114 |
+- A Docker host runs the media stack, including Immich and Jellyfin.
+- Paperless-ngx stores and indexes documents.
+- Automatic Ripping Machine is there for the occasional disc that still needs to be archived.
 
-## Monitoring and operations
+## Monitoring and management
 
-| Service | Purpose | Location |
-|---|---|---|
-| Uptime Kuma | Availability monitoring | `pve` / CT 138 |
-| Grafana | Dashboards and visualization | `pve3` / CT 118 |
-| Prometheus | Metrics collection | `pve3` / CT 119 |
-| Prometheus PVE Exporter | Proxmox metrics exporter | `pve3` / CT 121 |
-| Homelable | Network/monitoring visualization | `pve3` / CT 120 |
-| Hermes Agent | Homelab automation agent | `pve3` / CT 108 |
-| Rackula | Rack/infrastructure documentation | `pve3` / CT 122 |
+- Uptime Kuma watches the services I care about.
+- Prometheus and Grafana are used for metrics and dashboards.
+- Homepage gives me one place to jump into the apps.
+- Cloudflared and Cloudflare DDNS handle the external side of things.
 
-## Media, documents, and AI
+## AI and side projects
 
-| Service | Purpose | Location |
-|---|---|---|
-| Media Docker host | Media and photo-management workloads | `pve2` / VM 103 |
-| Servarr Docker host | Media automation workloads | `pve3` / VM 102 |
-| Paperless-ngx | Document management | `pve3` / CT 101 |
-| Ollama | Local model runtime | `pve3` / CT 115 |
-| Open WebUI | AI user interface | `pve3` / CT 116 |
-| Automatic Ripping Machine | Optical media ingestion | `pve` / VM 106 |
+- Ollama and Open WebUI are used for local models.
+- Hermes Agent helps me keep the lab maintained.
+- There are also a few small utilities for printing, scanning, and other one-off jobs.
 
-## Other hosted utilities
-
-| Service | Purpose | Location |
-|---|---|---|
-| Scanner service | Scanner integration | `pve3` / CT 123 |
-| Print service | Printing integration | `pve3` / CT 124 |
-| Python bot (Windows) | Bot/runtime workload | `pve3` / VM 126 |
-
-For the complete runtime list—including stopped test guests—see the [live inventory](../docs/inventory.md).
+The exact mix changes every now and then. This page is meant to stay readable, so it only gets updated when the overall setup changes.
