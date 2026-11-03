@@ -29,6 +29,25 @@ Proxmox cluster
 
 I keep most services in LXC containers. The heavier Docker and storage workloads run in VMs where that makes more sense.
 
+## Hardware
+
+These are the three machines doing the actual work:
+
+| Node | Hardware | Memory | Boot storage |
+|---|---|---:|---|
+| `pve` | Fujitsu PRIMERGY RX1330 M2, Intel Xeon E3-1230 v5 (4 cores / 8 threads) | 40 GB | 2 × 960 GB Intenso SATA SSDs in Btrfs RAID1 |
+| `pve2` | Custom N100M build, Intel N100 (4 cores) | 32 GB | 2 × 250 GB-class SATA SSDs in Btrfs RAID1 |
+| `pve3` | Fujitsu PRIMERGY RX1330 M4, Intel Xeon E-2136 (6 cores / 12 threads) | 64 GB | 2 × 960 GB Intenso SATA SSDs in Btrfs RAID1 |
+
+TrueNAS SCALE runs as a VM on `pve2` and provides the shared storage used by the rest of the lab.
+
+### Network gear
+
+- UDM Pro Max
+- USW Pro Max 24 PoE
+- U7 Pro Max access point
+- USW Lite 8 PoE
+
 ## Services
 
 The [apps page](apps/) has the short version of what is currently running here.
