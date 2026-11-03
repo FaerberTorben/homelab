@@ -1,63 +1,49 @@
-# My Homelab Setup
+# Homelab
 
-This repository contains 
-* Docker Compose stacks
-* configuration templates
-* documentation for everything running in my homelab
-	
-It spans currently two servers, tied together with Ubiquiti networking and cloudflare service.
-* First Proxmox node for Services 
-* Second Node for NAS and Data Container
-	
-## Table of Contents
+Infrastructure documentation and safe-to-share service inventory for the homelab.
 
-This is a **work in progress**
+> **Last verified:** November 3, 2026, against the live Proxmox cluster API. This repository intentionally excludes credentials, private addresses, API tokens, backup contents, and application secrets.
 
-## Navigation 
-* [Apps](apps/) - List of all the apps and services.
+## At a glance
 
-## Hardware
+- **3-node Proxmox cluster:** `pve`, `pve2`, and `pve3`
+- **41 managed guests:** 31 LXC containers and 10 virtual machines
+- **35 guests running** at the time of verification; 6 stopped/test guests are documented separately
+- Shared storage is provided by TrueNAS SCALE; Docker and service workloads are distributed across the cluster.
 
-### Compute
+## Documentation
 
-| | FUJITSU PRIMERGY RX1330 M2 | Custom Intel N100 |
-|---|---|---|
-| **OS** | Proxmox (pve1) | Proxmox (pve2) |
-| **Role** | HomeAssistant, AdGuard, Vaultwarden, n8n, Cloudflared and other services | TrueNAS, Immich, Paperless-ngx and other services |
-| **CPU** | 8 x Intel(R) Xeon(R) E3-1230 v5 @ 3.40Ghz | 4 x Intel(R) N100 |
-| **RAM** | 40GB DDR3 | 32GB DDR4 |
-| **BOOT Storage** | [2x Intenso High 960GB SDD](https://amzn.eu/d/0iS5TDub) RAID1 BTRFS (mirrored boot) | [2x Intenso Performance 250GB SDD](https://amzn.eu/d/024gGDCY) RAID1 BTRFS (mirrored boot) |
-| **Storage** | | [3x Toshiba xxx 10TB HDD](https://amzn.to/)
+- [Service catalog](apps/) — grouped overview of the services currently hosted.
+- [Live inventory](docs/inventory.md) — node and guest inventory, including runtime state and service tags.
+- [Contributing and documentation rules](#documentation-rules) — what may be committed here.
 
-!!- Not Available right now -!!
-| | FUJITSU PRIMERGY RX1330 |
-|---|---|
-| **OS** | Proxmox |
-| **Role** | Services |	
-| **CPU** | 12 x Intel(R) Xeon(R) E3-2136 @ 3.30Ghz |
-| **RAM** | 64GB DDR4 ECC |
-| **BOOT Storage** | [2x Intenso High 960GB SDD](https://amzn.eu/d/0iS5TDub) RAID1 BTRFS (mirrored boot) | 
+## Architecture
 
-### Networking
+```text
+Internet / Cloudflare
+        |
+  Reverse-proxied public services
+        |
++----------------------------+
+| Proxmox cluster             |
+|  pve   — core services      |
+|  pve2  — storage/media      |
+|  pve3  — automation/AI/apps |
++----------------------------+
+        |
+ TrueNAS SCALE shared storage
+```
 
-| Device | Description |
-|---|---|
-| **UDM Pro Max** | Primary router, gateway |
-| **USW Pro Max 24 PoE** | Main 24-port PoE switch powering cameras and access points. |
-| **1x U7 Pro Max** | Wi-Fi 7 access points providing wireless coverage. |
-| **USW Lite 8 PoE** | Secondary 8-port PoE switch for additional wired devices currently in Livingroom. |
+The cluster supports identity and password management, smart-home automation, monitoring, media, documents, AI workloads, notifications, and network utilities. Service names and current placement are recorded in the inventory rather than embedded in prose so that changes are easy to review.
 
-Other Unifi Devices
-* 1 x UACC-DAC-SFP10-0.5M
+## Documentation rules
 
-### Security
+- Never commit passwords, tokens, private keys, recovery codes, database dumps, or unredacted configuration files.
+- Do not publish private IP addresses, LAN DNS names, tunnel credentials, public hostnames, or firewall rules that increase exposure.
+- Prefer templates such as `example.env` with placeholder values when configuration examples are useful.
+- Update [the live inventory](docs/inventory.md) after substantial placement or service changes, and record the verification date.
+- Treat this repository as documentation and sanitized templates—not as a backup destination for production data.
 
-Currently no camera systems - UniFi Protect
+## Hardware and network
 
-| Camera | Details |
-|---|---|
-| **1x UVC-G4-Bullet** | Connected to the UNVR via UniFi Protect. Planning to slowly set up Room and Garden Security as budget allows. |
-
-### Other Devices
-
-* **Raspberry Pi 4B 4GB** (PoE HAT) - QDevice for Proxmox Quorum!.
+The environment uses Ubiquiti networking and a three-node Proxmox cluster with TrueNAS SCALE for storage. Exact hardware specifications evolve over time; only verified, non-sensitive topology belongs in this public documentation.
