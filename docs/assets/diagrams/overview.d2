@@ -1,0 +1,120 @@
+# Homelab overview
+# Source of truth: live Proxmox inventory. No addresses, ports, or secrets.
+
+direction: down
+vars: {
+  bg: "#101510"
+  panel: "#1b241d"
+  green: "#77d77f"
+  muted: "#c5d0c7"
+  gold: "#d8b45b"
+  border: "#4e6652"
+}
+
+classes: {
+  group: {
+    style: {
+      fill: ${panel}
+      stroke: ${border}
+      stroke-width: 2
+      font-color: ${muted}
+      bold: true
+    }
+  }
+  service: {
+    style: {
+      fill: "#26342a"
+      stroke: ${green}
+      font-color: "#eef6ef"
+      border-radius: 8
+    }
+  }
+  external: {
+    style: {
+      fill: "#302a1d"
+      stroke: ${gold}
+      font-color: "#fff6dd"
+      border-radius: 8
+    }
+  }
+  inactive: {
+    style: {
+      fill: "#242824"
+      stroke: "#7d897f"
+      font-color: "#bdc6be"
+      stroke-dash: 4
+      border-radius: 8
+    }
+  }
+}
+
+internet: Internet & Cloudflare {class: external}
+network: Ubiquiti network {class: external}
+
+cluster: Proxmox cluster {
+  class: group
+  pve: pve · core & home automation {
+    class: group
+    grid-rows: 4
+    vault: Vaultwarden
+    arm: Automatic Ripping Machine
+    mqtt: MQTT
+    ddns: Cloudflare DDNS
+    ntfy: ntfy
+    mqtt_house: MQTT house
+    z2m: Zigbee2MQTT house
+    authentik: Authentik
+    esphome: ESPHome
+    haos: Home Assistant OS
+    cloudflared: Cloudflared
+    kuma: Uptime Kuma
+    ups: UPS monitoring
+    legacy_pve: Debian / ATM / Zorin {class: inactive}
+  }
+
+  pve2: pve2 · storage & media {
+    class: group
+    grid-rows: 2
+    media: Media Docker · Immich · Jellyfin
+    truenas: TrueNAS SCALE
+    vw_db: Vaultwarden PostgreSQL
+    vw_proxy: Vaultwarden Nginx
+  }
+
+  pve3: pve3 · automation, observability & AI {
+    class: group
+    grid-rows: 5
+    paperless: Paperless-ngx
+    servarr: Servarr Docker
+    hermes: Hermes Agent
+    trading: Quant trading
+    homepage: Homepage
+    n8n: n8n
+    ollama: Ollama
+    openwebui: Open WebUI
+    grafana: Grafana
+    prometheus: Prometheus
+    docs: Homelable
+    exporters: PVE exporter
+    rackula: Rackula
+    scanner: Scanner
+    print: Print service
+    mt5: MT5 terminal
+    nodered: Node-RED
+    vw_b: Vaultwarden B
+    nodered_house: Node-RED house
+    jarvis: Jarvis voice
+    lab_pve3: Windows / pond test {class: inactive}
+  }
+}
+
+internet -> network -> cluster
+network -> pve.haos
+network -> pve2.truenas
+network -> pve3.jarvis
+pve2.truenas -> pve2.media: shared storage
+pve2.truenas -> pve3.paperless: shared storage
+
+style: {
+  fill: ${bg}
+}

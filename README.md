@@ -1,57 +1,49 @@
 # My homelab
 
-This is where I keep a high-level overview of my homelab. It started out fairly small and, like most homelabs, gradually collected more services than I originally planned.
+[![Documentation](https://img.shields.io/badge/docs-Material%20for%20MkDocs-56a866?logo=materialformkdocs&logoColor=white)](https://faerbertorben.github.io/homelab/)
+[![Proxmox](https://img.shields.io/badge/platform-Proxmox-E57000?logo=proxmox&logoColor=white)](https://www.proxmox.com/)
+[![Documentation scope](https://img.shields.io/badge/docs-public--safe-4e6652)](docs/reference/design-principles.md)
 
-The setup is built around a three-node Proxmox cluster, with TrueNAS SCALE handling shared storage. Ubiquiti gear takes care of the network, and Cloudflare sits in front of the services that need to be reachable from outside.
+A documented, privacy-conscious homelab built around a three-node Proxmox cluster. It runs the services my household actually uses: smart-home control, media, documents, passwords, identity, monitoring, automations, and local AI.
 
-## What I use it for
+> **Public-safe by design.** This repository deliberately excludes credentials, private addresses, ports, firewall rules, personal data, and production configuration.
 
-- Home automation and IoT
-- Media and document storage
-- Password management and identity services
-- Monitoring, dashboards, and notifications
-- A few automation and AI projects
+## At a glance
 
-## The rough layout
+| Layer | What runs here |
+|---|---|
+| Cluster | Three Proxmox nodes split between core/home automation, storage/media, and automation/AI |
+| Storage | TrueNAS SCALE for shared storage where workloads need it |
+| Smart home | Home Assistant, Node-RED, MQTT, Zigbee2MQTT, ESPHome, and Jarvis voice |
+| Media & documents | Immich, Jellyfin, Servarr, Paperless-ngx, and archival tools |
+| Access | Vaultwarden HA, Authentik, Cloudflare, ntfy |
+| Observability | Uptime Kuma, Prometheus, Grafana, Homepage |
 
-```text
-Internet
-   |
-Cloudflare
-   |
-Proxmox cluster
-   ├── pve   - core services and home automation
-   ├── pve2  - storage and media workloads
-   └── pve3  - automation, monitoring, and AI tools
-          |
-       TrueNAS SCALE
+## Documentation
+
+The full site is built with Material for MkDocs and published through GitHub Pages.
+
+- [Architecture overview](docs/architecture/overview.md)
+- [Topology diagrams](docs/architecture/diagrams.md)
+- [Platform](docs/platform/cluster.md)
+- [Service catalog](docs/services/index.md)
+- [Operations](docs/operations/maintenance.md)
+
+## Architecture maps
+
+[![Overview map](docs/assets/diagrams/overview.svg)](docs/architecture/diagrams.md)
+
+The repository contains two D2 maps: an overview grouped by physical host and a network/service-flow map. The sources and rendered SVGs live together under `docs/assets/diagrams/`.
+
+## Local preview
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+mkdocs serve
 ```
 
-I keep most services in LXC containers. The heavier Docker and storage workloads run in VMs where that makes more sense.
+## Repository boundaries
 
-## Hardware
-
-These are the three machines doing the actual work:
-
-| Node | Hardware | Memory | Boot storage |
-|---|---|---:|---|
-| `pve` | Fujitsu PRIMERGY RX1330 M2, Intel Xeon E3-1230 v5 (4 cores / 8 threads) | 40 GB | 2 × 960 GB Intenso SATA SSDs in Btrfs RAID1 |
-| `pve2` | Custom N100M build, Intel N100 (4 cores) | 32 GB | 2 × 250 GB-class SATA SSDs in Btrfs RAID1 |
-| `pve3` | Fujitsu PRIMERGY RX1330 M4, Intel Xeon E-2136 (6 cores / 12 threads) | 64 GB | 2 × 960 GB Intenso SATA SSDs in Btrfs RAID1 |
-
-TrueNAS SCALE runs as a VM on `pve2` and provides the shared storage used by the rest of the lab.
-
-### Network gear
-
-- UDM Pro Max
-- USW Pro Max 24 PoE
-- U7 Pro Max access point
-- USW Lite 8 PoE
-
-## Services
-
-The [apps page](apps/) has the short version of what is currently running here.
-
-## About this repository
-
-This is documentation, not a full backup of the lab. I keep secrets, private network details, and production configuration out of Git. If I add example configuration in the future, it will use placeholders rather than real values.
+This is documentation, not a backup, a secrets store, or a full configuration export. The goal is a useful, reviewable explanation of the homelab without making the homelab easier to attack.

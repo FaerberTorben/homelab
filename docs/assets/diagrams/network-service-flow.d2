@@ -1,0 +1,127 @@
+# Homelab network and service flow
+# High-level request, identity, automation, data, and observability paths.
+
+direction: down
+vars: {
+  bg: "#101510"
+  panel: "#1b241d"
+  green: "#77d77f"
+  gold: "#d8b45b"
+  blue: "#7eb6e6"
+  purple: "#b18de1"
+  red: "#e59898"
+  muted: "#c5d0c7"
+}
+
+classes: {
+  group: {
+    style: {fill: ${panel}; stroke: "#4e6652"; stroke-width: 2; font-color: ${muted}; bold: true}
+  }
+  edge: {
+    style: {fill: "#302a1d"; stroke: ${gold}; font-color: "#fff6dd"; border-radius: 8}
+  }
+  app: {
+    style: {fill: "#26342a"; stroke: ${green}; font-color: "#eef6ef"; border-radius: 8}
+  }
+  data: {
+    style: {fill: "#29223a"; stroke: ${purple}; font-color: "#f4edff"; border-radius: 8}
+  }
+  observability: {
+    style: {fill: "#20303a"; stroke: ${blue}; font-color: "#edf8ff"; border-radius: 8}
+  }
+  security: {
+    style: {fill: "#3a2529"; stroke: ${red}; font-color: "#fff0f1"; border-radius: 8}
+  }
+}
+
+external: External services {
+  class: group
+  users: Users & devices {class: edge}
+  cloudflare: Cloudflare · DNS · Tunnel {class: edge}
+  github: GitHub {class: edge}
+}
+
+edge: Network edge {
+  class: group
+  udm: UDM Pro Max {class: edge}
+  unifi: Switches & Wi‑Fi {class: edge}
+}
+
+access: Identity & secure access {
+  class: group
+  authentik: Authentik {class: security}
+  vaultwarden: Vaultwarden HA {class: security}
+  cloudflared: Cloudflared {class: security}
+}
+
+apps: Workloads {
+  class: group
+  smart_home: Smart home {
+    class: group
+    ha: Home Assistant {class: app}
+    node_red: Node‑RED house {class: app}
+    mqtt: MQTT · Zigbee2MQTT · ESPHome {class: app}
+    jarvis: Jarvis voice {class: app}
+  }
+  media_docs: Media & documents {
+    class: group
+    media: Immich · Jellyfin · media stack {class: app}
+    paperless: Paperless‑ngx {class: app}
+    servarr: Servarr {class: app}
+  }
+  automation_ai: Automation & AI {
+    class: group
+    hermes: Hermes Agent {class: app}
+    n8n: n8n {class: app}
+    ollama: Ollama · Open WebUI {class: app}
+    trading: Quant trading · MT5 {class: app}
+  }
+}
+
+data: Data & storage {
+  class: group
+  truenas: TrueNAS SCALE · SMB shares {class: data}
+  postgres: Vaultwarden PostgreSQL {class: data}
+}
+
+observe: Observability & delivery {
+  class: group
+  prometheus: Prometheus · PVE exporter {class: observability}
+  grafana: Grafana {class: observability}
+  kuma: Uptime Kuma {class: observability}
+  ntfy: ntfy {class: observability}
+  homepage: Homepage {class: observability}
+}
+
+platform: Physical platform {
+  class: group
+  pve: pve {class: app}
+  pve2: pve2 {class: app}
+  pve3: pve3 {class: app}
+}
+
+external.users -> external.cloudflare: public HTTPS
+external.cloudflare -> access.cloudflared: tunnel traffic
+external.users -> edge.unifi: LAN access
+edge.unifi -> apps.smart_home
+edge.unifi -> apps.media_docs
+edge.unifi -> apps.automation_ai
+access.authentik -> apps: sign-in
+access.vaultwarden -> apps: credentials
+apps.smart_home.ha -> apps.smart_home.mqtt: device events
+apps.smart_home.jarvis -> apps.smart_home.ha: voice actions
+apps.media_docs.media -> data.truenas: media files
+apps.media_docs.paperless -> data.truenas: documents
+access.vaultwarden -> data.postgres: data
+apps.automation_ai.hermes -> apps.smart_home.ha: house context
+apps.automation_ai.hermes -> apps.automation_ai.n8n: automation
+observe.prometheus -> apps: metrics
+observe.kuma -> external.cloudflare: probes
+observe.kuma -> observe.ntfy: alerts
+apps -> observe.homepage: links
+apps -> platform
+access -> platform
+observe -> platform
+data -> platform
+
+style: {fill: ${bg}}

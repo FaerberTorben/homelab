@@ -1,0 +1,58 @@
+site_name: Torben's Homelab
+site_description: Public-safe documentation for a three-node Proxmox homelab.
+site_url: https://faerbertorben.github.io/homelab/
+repo_name: FaerberTorben/homelab
+repo_url: https://github.com/FaerberTorben/homelab
+edit_uri: edit/master/docs/
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: slate
+      primary: green
+      accent: light-green
+  features:
+    - navigation.instant
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - content.action.edit
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - Overview: architecture/overview.md
+      - Diagrams: architecture/diagrams.md
+  - Platform:
+      - Cluster: platform/cluster.md
+      - Storage: platform/storage.md
+      - Network: platform/network.md
+  - Services:
+      - Service catalog: services/index.md
+      - Home automation: services/home-automation.md
+      - Media & documents: services/media-documents.md
+      - Access & security: services/access-security.md
+      - Automation & AI: services/automation-ai.md
+  - Operations:
+      - Observability: operations/observability.md
+      - Maintenance: operations/maintenance.md
+  - Reference:
+      - Design principles: reference/design-principles.md
+      - Service inventory: reference/service-inventory.md
